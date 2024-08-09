@@ -6,6 +6,7 @@ import SignUpForm from './_auth/forms/SignUpForm'
 import SignInForm from './_auth/forms/SignInForm'
 import RootLayout from './_root/RootLayout'
 import { Home } from './_root/pages'
+import { Toaster } from './components/ui/toaster'
 function App() {
   return (
     <main className='flex h-screen'>
@@ -22,6 +23,7 @@ function App() {
                 <Route index element={<Home />}></Route>
             </Route>
         </Routes>
+        <Toaster />
     </main>
   )
 }
