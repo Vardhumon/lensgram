@@ -1,4 +1,4 @@
-import { INewPost, INewUser } from "@/types";
+import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 import { ID, ImageGravity, Query } from "appwrite";
 import { Url } from "url";
@@ -103,7 +103,7 @@ export async function createPost(post:INewPost){
 
         //converting tags
 
-        const tags = post.tags?.replace(/ /g,'').split(' ') || []
+        const tags = post.tags?.trim().split(/\s+/) || [];
         
         const newPost = await databases.createDocument(
             appwriteConfig.databaseId,
@@ -261,6 +261,78 @@ export async function getRecentPosts() {
     }
   }
 
+  export async function getPostById(postId?: string) {
+    if (!postId) throw Error;
   
+    try {
+      const post = await databases.getDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.postCollectionId,
+        postId
+      );
+  
+      if (!post) throw Error;
+  
+      return post;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  export async function updatePost(post:IUpdatePost){
+    const hasFileToUpdate = post.file.length > 0
+    try {
+        let image = {
+            imageUrl:post.imageUrl,
+            imageId:post.imageId
+        }
+
+        if(hasFileToUpdate) {
+            const uploadedFile = await uploadFile(post.file[0])
+            if(!uploadedFile) throw Error;
+            const fileUrl = getFilePreview(uploadedFile.$id) 
+            console.log(fileUrl)
+            if(!fileUrl){ 
+                deleteFile(uploadedFile.$id)
+                throw new Error
+            }
+            image = {...image,imageUrl:fileUrl,imageId:uploadedFile.$id}
+            //converting tags
+            const tags = post.tags?.trim().split(/\s+/) || [];
+
+            const newPost = await databases.updateDocument(
+        
+                appwriteConfig.databaseId,
+                appwriteConfig.postCollectionId,
+                post.postId,
+                {
+                    caption:post.caption,
+                    imageUrl:image.imageUrl,
+                    imageId:image.imageId,
+                    location:post.location,
+                    tags:tags
+                }
+            )
+
+            if(!newPost){
+                await deleteFile(uploadedFile.$id)
+                throw Error
+            }
+
+        return newPost;
+            
+        };
+
+
+        
+
+        
+
+
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  
   

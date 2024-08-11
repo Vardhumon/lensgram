@@ -8,17 +8,19 @@ import { Textarea } from "../ui/textarea"
 import FileUploader from "../shared/FileUploader"
 import { PostValidation } from "@/lib/validation"
 import { Models } from "appwrite"
-import { useCreatePost } from "@/lib/react-query/queriesAndMutations"
+import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
 import { useToast } from "../ui/use-toast"
 import { useNavigate } from "react-router-dom"
  
 type PostFormProps = {
-    post?:Models.Document
+    post?:Models.Document;
+    action:'Create'|'Update';
 }
 
-function PostForm({post}:PostFormProps) {
+function PostForm({post,action}:PostFormProps) {
     const {mutateAsync:createPost, isPending:isLoadingCreate} = useCreatePost()
+    const {mutateAsync:updatePost, isPending:isLoadingUpdate} = useUpdatePost()
     const {user} = useUserContext();
     const {toast} = useToast()
     const navigate = useNavigate()
@@ -35,11 +37,23 @@ function PostForm({post}:PostFormProps) {
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
-   const newPost = await createPost({
+   if(post && action==='Update'){
+    const updatedPost = await updatePost({...values,postId:post.$id,imageId:post?.imageId, imageUrl: post?.imageUrl})
+    if(!updatePost){
+        toast({title:"There was Some Error"})
+    }else{
+        toast({title:"Success in updating"})
+        return navigate(`/post/${post.$id}`)
+    }
+
+    }
+   
+   
+    const newPost = await createPost({
     ...values,
     userId:user.id,
    })
-   console.log(newPost)
+   
    if(newPost){
     toast({title:"Success",description:"It was Posted Succesfully"})
     navigate('/')
@@ -119,7 +133,7 @@ function PostForm({post}:PostFormProps) {
         />
         <div className="flex gap-4 items-center justify-end">
             <Button type='button' className="shad-button_dark_4">Cancel</Button>
-            <Button type="submit" className="shad-button_primary whitespace-nowrap">Submit</Button>
+            <Button type="submit" className="shad-button_primary whitespace-nowrap">{action}</Button>
         </div>
 
       </form>

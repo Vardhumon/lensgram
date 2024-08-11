@@ -56,6 +56,11 @@ const PostCard = ({post}:PostCardProps) => {
         />
       </Link>
     </div>
+            <img
+              src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
+              alt="post image"
+              className="post-card_img mt-5"
+            />
 
     <Link to={`/posts/${post.$id}`}>
       <div className="small-medium lg:base-medium py-5">
@@ -69,11 +74,6 @@ const PostCard = ({post}:PostCardProps) => {
         </ul>
       </div>
 
-      <img
-        src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
-        alt="post image"
-        className="post-card_img"
-      />
     </Link>
           <PostStats post={post} userId={user.id}></PostStats>
   </div>
