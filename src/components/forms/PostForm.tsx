@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-import {Form,FormControl,FormDescription,FormField,FormItem,FormLabel,FormMessage} from "@/components/ui/form"
+import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import FileUploader from "../shared/FileUploader"
@@ -19,8 +19,8 @@ type PostFormProps = {
 }
 
 function PostForm({post,action}:PostFormProps) {
-    const {mutateAsync:createPost, isPending:isLoadingCreate} = useCreatePost()
-    const {mutateAsync:updatePost, isPending:isLoadingUpdate} = useUpdatePost()
+    const {mutateAsync:createPost} = useCreatePost()
+    const {mutateAsync:updatePost} = useUpdatePost()
     const {user} = useUserContext();
     const {toast} = useToast()
     const navigate = useNavigate()
@@ -43,6 +43,7 @@ function PostForm({post,action}:PostFormProps) {
         toast({title:"There was Some Error"})
     }else{
         toast({title:"Success in updating"})
+        console.log(updatedPost)
         return navigate(`/post/${post.$id}`)
     }
 

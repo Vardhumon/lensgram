@@ -1,5 +1,5 @@
 import { useSignOut } from '@/lib/react-query/queriesAndMutations'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button';
 import { useUserContext } from '@/context/AuthContext';
