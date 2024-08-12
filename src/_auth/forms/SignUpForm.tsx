@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from '@/components/ui/button'
@@ -8,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import { SignUpformSchema } from '@/lib/validation'
 import { z } from 'zod'
 import Loader from '@/components/shared/Loader'
-import { createUserAccount } from '@/lib/appwrite/api'
 import { useToast } from '@/components/ui/use-toast'
 import { useCreateUserAccount, useSignInAccount } from '@/lib/react-query/queriesAndMutations'
 import { useUserContext } from '@/context/AuthContext'

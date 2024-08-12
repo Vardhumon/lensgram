@@ -162,6 +162,7 @@ export function getFilePreview(fileId:string){
 export async function deleteFile(fileId:string){
     try {
         const deletedFile = storage.deleteFile(appwriteConfig.storageId,fileId);
+        console.log(deletedFile)
         return true;
     } catch (error) {
         console.log(error)
