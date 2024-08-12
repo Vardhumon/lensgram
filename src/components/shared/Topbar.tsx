@@ -30,7 +30,7 @@ function Topbar() {
                     src='/assets/icons/logout.svg' alt='logout'
                     />
                 </Button>
-                <Link to={'/profile'}>
+                <Link to={`/profile/${user.id}`}>
                     <img 
                     src={user.imageUrl || '/assets/iamges/profile-placeholder.svg'}
                     alt='profile-photo'
