@@ -38,6 +38,7 @@ function SigninForm() {
       console.log(isLoggedIn)
       if(isLoggedIn){
         form.reset();
+        toast({title:"Logged In Successfully!"})
         navigate('/')
       }else{
         return toast({title:'Trouble logging In'})

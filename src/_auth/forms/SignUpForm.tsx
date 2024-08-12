@@ -52,6 +52,7 @@ function SignUpForm() {
         const isLoggedIn = await checkAuthUser()
         if(isLoggedIn){
           form.reset();
+          toast({title:'Account Created Succesfully'})
           navigate('/')
         }else{
           toast({title:'Trouble logging In'})
