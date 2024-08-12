@@ -19,8 +19,8 @@ function Topbar() {
                 <img 
                 src='/assets/images/logo.svg'
                 alt='logo'
-                width={130}
-                height={325}
+                width={60}
+                height={60}
                 />
             </Link>
 

@@ -22,8 +22,8 @@ function Leftbar() {
                 <img 
                 src='/assets/images/logo.svg'
                 alt='logo'
-                width={130}
-                height={325}
+                width={100}
+                height={100}
                 />
             </Link>
 
