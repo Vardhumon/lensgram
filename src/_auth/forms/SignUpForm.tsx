@@ -67,7 +67,7 @@ function SignUpForm() {
     <>
     <Form {...form}>
         <div className='sm:w-420 flex-center flex-col'>
-            <img src='assets/images/logo.svg' alt= 'logo' />
+            <img src='assets/images/logo.svg' alt= 'logo' className='w-40 h-40 sm:w-1/2 sm:h-1/2 '/>
             <h2 className='h3-bold md:h2-bold pt-5 sm:pt-12'>Create a new account</h2>
             <p className='text-light-3 small-medium md:base-regular mt-2'>To use LensGram, please enter your details</p>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full pt-5">
