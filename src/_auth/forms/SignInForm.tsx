@@ -15,7 +15,7 @@ import { useUserContext } from '@/context/AuthContext'
 function SigninForm() {
   const navigate = useNavigate();
   const {toast} = useToast();
-  const {mutateAsync:signInAccount} = useSignInAccount();
+  const {mutateAsync:signInAccount, isPending:isUserSigningIn} = useSignInAccount();
   const {checkAuthUser, isLoading:isUserLoading} = useUserContext();
      // 1. Define your form.
   const form = useForm<z.infer<typeof SignInValidation>>({
@@ -81,7 +81,7 @@ function SigninForm() {
             )}
           />
             <Button type="submit" className='shad-button_primary'>
-                {isUserLoading?
+                {isUserLoading || isUserSigningIn?
                     <div className='flex-center gap-2'><Loader />Loading....</div>:<div>Log in</div>
                 }
             </Button>
