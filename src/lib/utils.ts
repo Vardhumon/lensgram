@@ -1,10 +1,11 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
+export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
 export function formatDateString(dateString: string) {
   const options: Intl.DateTimeFormatOptions = {
@@ -51,6 +52,7 @@ export const multiFormatDateString = (timestamp: string = ""): string => {
       return "Just now";
   }
 };
+
 export const checkIsLiked = (likeList: string[], userId: string) => {
   return likeList.includes(userId);
 };
